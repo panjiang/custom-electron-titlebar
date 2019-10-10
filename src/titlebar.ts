@@ -533,7 +533,9 @@ export class Titlebar extends Themebar {
 	 * Remove the titlebar and all methods.
 	 */
 	dispose() {
-		this.menubar.dispose();
+		if (this.menubar) {
+            this.menubar.dispose();
+        }
 		super.dispose();
 		removeNode(this.titlebar);
 
