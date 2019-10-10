@@ -5,7 +5,7 @@ This project is a typescript library for electron that allows you to configure a
 ### **It is a library for electron, it cannot be used on a basic website.**
 
 [![LICENSE](https://img.shields.io/github/license/AlexTorresSk/custom-electron-titlebar.svg)](https://github.com/AlexTorresSk/custom-electron-titlebar/blob/master/LICENSE)
-[![NPM Version](https://img.shields.io/npm/v/custom-electron-titlebar.svg)](https://npmjs.org/package/custom-electron-titlebar)
+[![NPM Version](https://img.shields.io/npm/v/custom-electron-titlebar.svg)](https://npmjs.org/package/pj-custom-electron-titlebar)
 
 ![Preview 1](screenshots/window_1.png)
 
@@ -16,13 +16,13 @@ This project is a typescript library for electron that allows you to configure a
 ## Install
 
 ```
-npm i custom-electron-titlebar
+npm i pj-custom-electron-titlebar
 ```
 
 Or
 
 ```
-npm install custom-electron-titlebar@latest
+npm install pj-custom-electron-titlebar@latest
 ```
 
 or use the base project [cet-quickstart](https://github.com/AlexTorresSk/cet-quickstart)
@@ -32,7 +32,7 @@ or use the base project [cet-quickstart](https://github.com/AlexTorresSk/cet-qui
 In your renderer file or in an HTML script tag add:
 
 ```js
-const customTitlebar = require('custom-electron-titlebar');
+const customTitlebar = require('pj-custom-electron-titlebar');
 
 new customTitlebar.Titlebar({
 	backgroundColor: customTitlebar.Color.fromHex('#444')
@@ -41,7 +41,7 @@ new customTitlebar.Titlebar({
 
 > if you are using _typescript_
 ```ts
-import { Titlebar, Color } from 'custom-electron-titlebar'
+import { Titlebar, Color } from 'pj-custom-electron-titlebar'
 
 new Titlebar({
 	backgroundColor: Color.fromHex('#ECECEC')
