@@ -113,6 +113,7 @@ export class Titlebar extends Themebar {
 	private currentWindow: BrowserWindow;
 	private _options: TitlebarOptions;
 	private menubar: Menubar;
+	private _events: {[k:string]: Function;};
 
 	constructor(options?: TitlebarOptions) {
 		super();
@@ -125,6 +126,10 @@ export class Titlebar extends Themebar {
 		this.createTitlebar();
 		this.updateStyles();
 		this.registerTheme(this._options.iconsTheme);
+
+		window.addEventListener('beforeunload', () => {
+			this.removeListeners();
+		});
 	}
 
 	private closeMenu = () => {
@@ -134,31 +139,44 @@ export class Titlebar extends Themebar {
 	}
 
 	private registerListeners() {
-		this.currentWindow.on(EventType.FOCUS, () => {
+		this._events = {}
+		this._events[EventType.FOCUS] = () => {
 			this.onDidChangeWindowFocus(true);
 			this.onFocus();
-		});
+		}
 
-		this.currentWindow.on(EventType.BLUR, () => {
+		this._events[EventType.BLUR] = () => {
 			this.onDidChangeWindowFocus(false);
 			this.onBlur();
-		});
+		}
 
-		this.currentWindow.on(EventType.MAXIMIZE, () => {
+		this._events[EventType.MAXIMIZE] = () => {
 			this.onDidChangeMaximized(true);
-		});
+		}
 
-		this.currentWindow.on(EventType.UNMAXIMIZE, () => {
+		this._events[EventType.UNMAXIMIZE] = () => {
 			this.onDidChangeMaximized(false);
-		});
+		}
 
-		this.currentWindow.on(EventType.ENTER_FULLSCREEN, () => {
+		this._events[EventType.ENTER_FULLSCREEN] = () => {
 			this.onDidChangeFullscreen(true);
-		});
+		}
 
-		this.currentWindow.on(EventType.LEAVE_FULLSCREEN, () => {
+		this._events[EventType.LEAVE_FULLSCREEN] = () => {
 			this.onDidChangeFullscreen(false);
-		});
+		}
+
+		for (const k in this._events) {
+			this.currentWindow.on(k as any, this._events[k])
+		}
+	}
+
+	private removeListeners() {
+		for (const k in this._events) {
+			this.currentWindow.removeListener(k as any, this._events[k])
+		}
+
+		this._events = {}
 	}
 
 	private createTitlebar() {
@@ -544,6 +562,8 @@ export class Titlebar extends Themebar {
 		}
 
 		removeNode(this.container);
+
+		this.removeListeners()
 	}
 
 }
