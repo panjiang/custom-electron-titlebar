@@ -2,7 +2,7 @@
 exports.__esModule = true;
 var __1 = require("..");
 new __1.Titlebar({
-    backgroundColor: __1.Color.fromHex('#37474f'),
-    icon: './images/icon.svg',
+    backgroundColor: __1.Color.fromHex("#eceff1"),
+    icon: "./images/icon.svg",
     shadow: true
 });

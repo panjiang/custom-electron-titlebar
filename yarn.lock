@@ -177,10 +177,10 @@ electron-download@^4.1.0:
     semver "^5.4.1"
     sumchecker "^2.0.2"
 
-electron@^4.2.8:
-  version "4.2.11"
-  resolved "https://registry.npm.taobao.org/electron/download/electron-4.2.11.tgz#bbcf4981b85b5cd841e57e9f70b4bb66da0b261a"
-  integrity sha1-u89JgbhbXNhB5X6fcLS7ZtoLJho=
+electron@^6.0.11:
+  version "6.0.12"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-6.0.12.tgz#85bf0061e32f660256cfde95488f1cb75253bc94"
+  integrity sha512-70ODZa1RP6K0gE9IV9YLCXPSyhLjXksCuYSSPb3MljbfwfHo5uE6X0CGxzm+54YuPdE2e7EPnWZxOOsJYrS5iQ==
   dependencies:
     "@types/node" "^10.12.18"
     electron-download "^4.1.0"
