@@ -412,7 +412,7 @@ export class Titlebar extends Themebar {
 				this.titlebar.style.color = titleForeground.toString();
 			}
 
-			const backgroundColor = this._options.backgroundColor.darken(.16);
+			const backgroundColor = this._options.backgroundColor.darken(.1);
 			const foregroundColor = backgroundColor.isLighter() ? INACTIVE_FOREGROUND_DARK : INACTIVE_FOREGROUND;
 			const bgColor = !this._options.itemBackgroundColor ||
 				this._options.itemBackgroundColor.equals(backgroundColor) ? new Color(new RGBA(0, 0, 0, .14)) : this._options.itemBackgroundColor;
@@ -423,7 +423,7 @@ export class Titlebar extends Themebar {
 					backgroundColor: backgroundColor,
 					foregroundColor: foregroundColor,
 					selectionBackgroundColor: bgColor,
-					selectionForegroundColor: fgColor,
+					// selectionForegroundColor: fgColor,
 					separatorColor: foregroundColor
 				});
 			}

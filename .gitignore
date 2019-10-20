@@ -38,3 +38,6 @@ node_modules
 typings/
 lib/
 *.map
+
+package-lock.json
+yarn.lock

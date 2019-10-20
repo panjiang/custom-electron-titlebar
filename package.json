@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "start": "tsc ./example/main && tsc ./example/renderer && electron ./example/main.js",
+    "start": "tsc && tsc ./example/main && tsc ./example/renderer && electron ./example/main.js",
     "build": "tsc"
   },
   "author": "Alex Torres <alextorressk@gmail.com>",
