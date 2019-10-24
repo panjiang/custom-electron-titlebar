@@ -6,7 +6,7 @@
  *  You can check your respective license and the original file in https://github.com/Microsoft/vscode/
  *-------------------------------------------------------------------------------------------------------*/
 
-import { toDisposable, IDisposable, Disposable } from "./common/lifecycle";
+import { toDisposable, IDisposable, Disposable } from './common/lifecycle';
 
 class ThemingRegistry extends Disposable {
   private theming: Theme[] = [];
@@ -358,12 +358,12 @@ export class Themebar extends ThemingRegistry {
           cssRules.push(rule);
           hasRule[rule] = true;
         }
-      }
+      },
     };
 
     this.getTheming().forEach(p => p(ruleCollector));
 
-    _applyRules(cssRules.join("\n"), "titlebar-style");
+    _applyRules(cssRules.join('\n'), 'titlebar-style');
   }
 
   static get win(): Theme {
@@ -537,8 +537,8 @@ function _applyRules(styleSheetContent: string, rulesClassName: string) {
   let themeStyles = document.head.getElementsByClassName(rulesClassName);
 
   if (themeStyles.length === 0) {
-    let styleElement = document.createElement("style");
-    styleElement.type = "text/css";
+    let styleElement = document.createElement('style');
+    styleElement.type = 'text/css';
     styleElement.className = rulesClassName;
     styleElement.innerHTML = styleSheetContent;
     document.head.appendChild(styleElement);

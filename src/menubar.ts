@@ -8,8 +8,8 @@
  *  Licensed under the MIT License. See License in the project root for license information.
  *-------------------------------------------------------------------------------------------------------*/
 
-import { Color } from "./common/color";
-import { MenuItemConstructorOptions, remote } from "electron";
+import { Color } from './common/color';
+import { MenuItemConstructorOptions, remote } from 'electron';
 import {
   $,
   addDisposableListener,
@@ -20,23 +20,23 @@ import {
   removeNode,
   isAncestor,
   EventLike,
-  EventHelper
-} from "./common/dom";
+  EventHelper,
+} from './common/dom';
 import {
   Menu,
   cleanMnemonic,
   MENU_MNEMONIC_REGEX,
   MENU_ESCAPED_MNEMONIC_REGEX,
   IMenuOptions,
-  IMenuStyle
-} from "./menu/menu";
-import { StandardKeyboardEvent } from "./browser/keyboardEvent";
-import { KeyCodeUtils, KeyCode } from "./common/keyCodes";
-import { IMenuItem } from "./menu/menuitem";
-import { Disposable, IDisposable, dispose } from "./common/lifecycle";
-import { Event, Emitter } from "./common/event";
-import { domEvent } from "./browser/event";
-import { isMacintosh } from "./common/platform";
+  IMenuStyle,
+} from './menu/menu';
+import { StandardKeyboardEvent } from './browser/keyboardEvent';
+import { KeyCodeUtils, KeyCode } from './common/keyCodes';
+import { IMenuItem } from './menu/menuitem';
+import { Disposable, IDisposable, dispose } from './common/lifecycle';
+import { Event, Emitter } from './common/event';
+import { domEvent } from './browser/event';
+import { isMacintosh } from './common/platform';
 
 export interface MenubarOptions {
   /**
@@ -49,7 +49,7 @@ export interface MenubarOptions {
    * The position of menubar on titlebar.
    * *The default is left*
    */
-  menuPosition?: "left" | "bottom";
+  menuPosition?: 'left' | 'bottom';
   /**
    * Enable the mnemonics on menubar and menu items
    * *The default is true*
@@ -72,7 +72,7 @@ enum MenubarState {
   HIDDEN,
   VISIBLE,
   FOCUSED,
-  OPEN
+  OPEN,
 }
 
 export class Menubar extends Disposable {
@@ -245,18 +245,18 @@ export class Menubar extends Disposable {
       const menuIndex = this.menuItems.length;
       const cleanMenuLabel = cleanMnemonic(menubarMenu.label);
 
-      const buttonElement = $("div.menubar-menu-button", {
-        role: "menuitem",
+      const buttonElement = $('div.menubar-menu-button', {
+        role: 'menuitem',
         tabindex: -1,
-        "aria-label": cleanMenuLabel,
-        "aria-haspopup": true
+        'aria-label': cleanMenuLabel,
+        'aria-haspopup': true,
       });
       if (!menubarMenu.enabled) {
-        addClass(buttonElement, "disabled");
+        addClass(buttonElement, 'disabled');
       }
-      const titleElement = $("div.menubar-menu-title", {
-        role: "none",
-        "aria-hidden": true
+      const titleElement = $('div.menubar-menu-title', {
+        role: 'none',
+        'aria-hidden': true,
       });
 
       buttonElement.appendChild(titleElement);
@@ -346,7 +346,7 @@ export class Menubar extends Disposable {
           menuItem: menubarMenu,
           submenu: menubarMenu.submenu as Electron.Menu,
           buttonElement: buttonElement,
-          titleElement: titleElement
+          titleElement: titleElement,
         });
       }
     });
@@ -413,11 +413,11 @@ export class Menubar extends Disposable {
 
       if (this.options.enableMnemonics) {
         buttonElement.setAttribute(
-          "aria-keyshortcuts",
-          "Alt+" + mnemonic.toUpperCase()
+          'aria-keyshortcuts',
+          'Alt+' + mnemonic.toUpperCase()
         );
       } else {
-        buttonElement.removeAttribute("aria-keyshortcuts");
+        buttonElement.removeAttribute('aria-keyshortcuts');
       }
     }
   }
@@ -427,14 +427,14 @@ export class Menubar extends Disposable {
   }
 
   private hideMenubar(): void {
-    if (this.container.style.display !== "none") {
-      this.container.style.display = "none";
+    if (this.container.style.display !== 'none') {
+      this.container.style.display = 'none';
     }
   }
 
   private showMenubar(): void {
-    if (this.container.style.display !== "flex") {
-      this.container.style.display = "flex";
+    if (this.container.style.display !== 'flex') {
+      this.container.style.display = 'flex';
     }
   }
 
@@ -601,7 +601,7 @@ export class Menubar extends Disposable {
         if (menuBarMenu.titleElement.children.length) {
           let child = menuBarMenu.titleElement.children.item(0) as HTMLElement;
           if (child) {
-            child.style.textDecoration = visible ? "underline" : null;
+            child.style.textDecoration = visible ? 'underline' : null;
           }
         }
       });
@@ -653,7 +653,7 @@ export class Menubar extends Disposable {
     // Alt key pressed while menu is focused. This should return focus away from the menubar
     if (
       this.isFocused &&
-      modifierKeyStatus.lastKeyPressed === "alt" &&
+      modifierKeyStatus.lastKeyPressed === 'alt' &&
       modifierKeyStatus.altKey
     ) {
       this.setUnfocusedState();
@@ -664,8 +664,8 @@ export class Menubar extends Disposable {
     // Clean alt key press and release
     if (
       allModifiersReleased &&
-      modifierKeyStatus.lastKeyPressed === "alt" &&
-      modifierKeyStatus.lastKeyReleased === "alt"
+      modifierKeyStatus.lastKeyPressed === 'alt' &&
+      modifierKeyStatus.lastKeyReleased === 'alt'
     ) {
       if (!this.awaitingAltRelease) {
         if (!this.isFocused) {
@@ -681,7 +681,7 @@ export class Menubar extends Disposable {
     // Alt key released
     if (
       !modifierKeyStatus.altKey &&
-      modifierKeyStatus.lastKeyReleased === "alt"
+      modifierKeyStatus.lastKeyReleased === 'alt'
     ) {
       this.awaitingAltRelease = false;
     }
@@ -709,7 +709,7 @@ export class Menubar extends Disposable {
 
       if (this.focusedMenu.holder) {
         if (this.focusedMenu.holder.parentElement) {
-          removeClass(this.focusedMenu.holder.parentElement, "open");
+          removeClass(this.focusedMenu.holder.parentElement, 'open');
         }
 
         this.focusedMenu.holder.remove();
@@ -725,10 +725,10 @@ export class Menubar extends Disposable {
 
   private showMenu(menuIndex: number, selectFirst = true): void {
     const customMenu = this.menuItems[menuIndex];
-    const menuHolder = $("ul.menubar-menu-container");
+    const menuHolder = $('ul.menubar-menu-container');
 
-    addClass(customMenu.buttonElement, "open");
-    menuHolder.setAttribute("role", "menu");
+    addClass(customMenu.buttonElement, 'open');
+    menuHolder.setAttribute('role', 'menu');
     menuHolder.tabIndex = 0;
     menuHolder.style.top = `${
       customMenu.buttonElement.getBoundingClientRect().bottom
@@ -741,7 +741,7 @@ export class Menubar extends Disposable {
 
     let menuOptions: IMenuOptions = {
       enableMnemonics: this.mnemonicsInUse && this.options.enableMnemonics,
-      ariaLabel: customMenu.buttonElement.attributes["aria-label"].value
+      ariaLabel: customMenu.buttonElement.attributes['aria-label'].value,
     };
 
     let menuWidget = new Menu(menuHolder, menuOptions, this.closeSubMenu);
@@ -759,12 +759,12 @@ export class Menubar extends Disposable {
     this.focusedMenu = {
       index: menuIndex,
       holder: menuHolder,
-      widget: menuWidget
+      widget: menuWidget,
     };
   }
 }
 
-type ModifierKey = "alt" | "ctrl" | "shift";
+type ModifierKey = 'alt' | 'ctrl' | 'shift';
 
 interface IModifierKeyStatus {
   altKey: boolean;
@@ -785,19 +785,19 @@ class ModifierKeyEmitter extends Emitter<IModifierKeyStatus> {
     this._keyStatus = {
       altKey: false,
       shiftKey: false,
-      ctrlKey: false
+      ctrlKey: false,
     };
 
     this._subscriptions.push(
-      domEvent(document.body, "keydown", true)(e => {
+      domEvent(document.body, 'keydown', true)(e => {
         const event = new StandardKeyboardEvent(e);
 
         if (e.altKey && !this._keyStatus.altKey) {
-          this._keyStatus.lastKeyPressed = "alt";
+          this._keyStatus.lastKeyPressed = 'alt';
         } else if (e.ctrlKey && !this._keyStatus.ctrlKey) {
-          this._keyStatus.lastKeyPressed = "ctrl";
+          this._keyStatus.lastKeyPressed = 'ctrl';
         } else if (e.shiftKey && !this._keyStatus.shiftKey) {
-          this._keyStatus.lastKeyPressed = "shift";
+          this._keyStatus.lastKeyPressed = 'shift';
         } else if (event.keyCode !== KeyCode.Alt) {
           this._keyStatus.lastKeyPressed = undefined;
         } else {
@@ -815,13 +815,13 @@ class ModifierKeyEmitter extends Emitter<IModifierKeyStatus> {
     );
 
     this._subscriptions.push(
-      domEvent(document.body, "keyup", true)(e => {
+      domEvent(document.body, 'keyup', true)(e => {
         if (!e.altKey && this._keyStatus.altKey) {
-          this._keyStatus.lastKeyReleased = "alt";
+          this._keyStatus.lastKeyReleased = 'alt';
         } else if (!e.ctrlKey && this._keyStatus.ctrlKey) {
-          this._keyStatus.lastKeyReleased = "ctrl";
+          this._keyStatus.lastKeyReleased = 'ctrl';
         } else if (!e.shiftKey && this._keyStatus.shiftKey) {
-          this._keyStatus.lastKeyReleased = "shift";
+          this._keyStatus.lastKeyReleased = 'shift';
         } else {
           this._keyStatus.lastKeyReleased = undefined;
         }
@@ -843,13 +843,13 @@ class ModifierKeyEmitter extends Emitter<IModifierKeyStatus> {
     );
 
     this._subscriptions.push(
-      domEvent(document.body, "mousedown", true)(e => {
+      domEvent(document.body, 'mousedown', true)(e => {
         this._keyStatus.lastKeyPressed = undefined;
       })
     );
 
     this._subscriptions.push(
-      domEvent(window, "blur")(e => {
+      domEvent(window, 'blur')(e => {
         this._keyStatus.lastKeyPressed = undefined;
         this._keyStatus.lastKeyReleased = undefined;
         this._keyStatus.altKey = false;
@@ -878,12 +878,12 @@ class ModifierKeyEmitter extends Emitter<IModifierKeyStatus> {
 export function escape(html: string): string {
   return html.replace(/[<>&]/g, function(match) {
     switch (match) {
-      case "<":
-        return "&lt;";
-      case ">":
-        return "&gt;";
-      case "&":
-        return "&amp;";
+      case '<':
+        return '&lt;';
+      case '>':
+        return '&gt;';
+      case '&':
+        return '&amp;';
       default:
         return match;
     }
