@@ -29,8 +29,6 @@ Or
 npm install pj-custom-electron-titlebar@latest
 ```
 
-or use the base project [cet-quickstart](https://github.com/AlexTorresSk/cet-quickstart)
-
 ## Usage
 
 In your renderer file or in an HTML script tag add:
