@@ -1,43 +1,42 @@
 /*--------------------------------------------------------------------------------------------------------
  *  Copyright (c) 2018 Alex Torres
  *  Licensed under the MIT License. See License in the project root for license information.
- * 
+ *
  *  This file has parts of one or more project files (VS Code) from Microsoft
  *  You can check your respective license and the original file in https://github.com/Microsoft/vscode/
  *-------------------------------------------------------------------------------------------------------*/
 
-import { toDisposable, IDisposable, Disposable } from "./common/lifecycle";
+import { toDisposable, IDisposable, Disposable } from './common/lifecycle';
 
 class ThemingRegistry extends Disposable {
-    private theming: Theme[] = [];
+  private theming: Theme[] = [];
 
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.theming = [];
-    }
+    this.theming = [];
+  }
 
-    protected onThemeChange(theme: Theme): IDisposable {
-        this.theming.push(theme);
-        return toDisposable(() => {
-            const idx = this.theming.indexOf(theme);
-            this.theming.splice(idx, 1);
-        });
-    }
+  protected onThemeChange(theme: Theme): IDisposable {
+    this.theming.push(theme);
+    return toDisposable(() => {
+      const idx = this.theming.indexOf(theme);
+      this.theming.splice(idx, 1);
+    });
+  }
 
-    protected getTheming(): Theme[] {
-        return this.theming;
-    }
+  protected getTheming(): Theme[] {
+    return this.theming;
+  }
 }
 
 export class Themebar extends ThemingRegistry {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
-
-        // Titlebar
-        this.registerTheme((collector: CssStyle) => {
-            collector.addRule(`
+    // Titlebar
+    this.registerTheme((collector: CssStyle) => {
+      collector.addRule(`
             .titlebar {
                 position: absolute;
                 top: 0;
@@ -81,11 +80,11 @@ export class Themebar extends ThemingRegistry {
                 margin: 0 5px 0 0;
             }
             `);
-        });
+    });
 
-        // Drag region
-        this.registerTheme((collector: CssStyle) => {
-            collector.addRule(`
+    // Drag region
+    this.registerTheme((collector: CssStyle) => {
+      collector.addRule(`
             .titlebar .titlebar-drag-region {
                 top: 0;
                 left: 0;
@@ -97,11 +96,11 @@ export class Themebar extends ThemingRegistry {
                 -webkit-app-region: drag;
             }
             `);
-        });
+    });
 
-        // icon app
-        this.registerTheme((collector: CssStyle) => {
-            collector.addRule(`
+    // icon app
+    this.registerTheme((collector: CssStyle) => {
+      collector.addRule(`
             .titlebar > .window-appicon {
                 width: 35px;
                 height: 30px;
@@ -113,11 +112,11 @@ export class Themebar extends ThemingRegistry {
                 flex-shrink: 0;
             }
             `);
-        });
+    });
 
-        // Menubar
-        this.registerTheme((collector: CssStyle) => {
-            collector.addRule(`
+    // Menubar
+    this.registerTheme((collector: CssStyle) => {
+      collector.addRule(`
             .menubar {
                 display: flex;
                 flex-shrink: 1;
@@ -290,11 +289,11 @@ export class Themebar extends ThemingRegistry {
                 visibility: visible;
             }
             `);
-        });
+    });
 
-        // Title
-        this.registerTheme((collector: CssStyle) => {
-            collector.addRule(`
+    // Title
+    this.registerTheme((collector: CssStyle) => {
+      collector.addRule(`
             .titlebar .window-title {
                 flex: 0 1 auto;
                 font-size: 12px;
@@ -305,11 +304,11 @@ export class Themebar extends ThemingRegistry {
                 zoom: 1;
             }
             `);
-        });
+    });
 
-        // Window controls
-        this.registerTheme((collector: CssStyle) => {
-            collector.addRule(`
+    // Window controls
+    this.registerTheme((collector: CssStyle) => {
+      collector.addRule(`
             .titlebar .window-controls-container {
                 display: flex;
                 flex-grow: 0;
@@ -322,11 +321,11 @@ export class Themebar extends ThemingRegistry {
                 margin-left: 5px;
             }
             `);
-        });
+    });
 
-        // Resizer
-        this.registerTheme((collector: CssStyle) => {
-            collector.addRule(`
+    // Resizer
+    this.registerTheme((collector: CssStyle) => {
+      collector.addRule(`
             .titlebar.windows .resizer, .titlebar.linux .resizer {
                 -webkit-app-region: no-drag;
                 position: absolute;
@@ -345,31 +344,31 @@ export class Themebar extends ThemingRegistry {
                 height: 100%;
             }
             `);
-        });
-    }
+    });
+  }
 
-    protected registerTheme(theme: Theme) {
-        this.onThemeChange(theme);
+  protected registerTheme(theme: Theme) {
+    this.onThemeChange(theme);
 
-        let cssRules: string[] = [];
-        let hasRule: { [rule: string]: boolean } = {};
-        let ruleCollector = {
-            addRule: (rule: string) => {
-                if (!hasRule[rule]) {
-                    cssRules.push(rule);
-                    hasRule[rule] = true;
-                }
-            }
-        };
+    let cssRules: string[] = [];
+    let hasRule: { [rule: string]: boolean } = {};
+    let ruleCollector = {
+      addRule: (rule: string) => {
+        if (!hasRule[rule]) {
+          cssRules.push(rule);
+          hasRule[rule] = true;
+        }
+      },
+    };
 
-        this.getTheming().forEach(p => p(ruleCollector));
+    this.getTheming().forEach(p => p(ruleCollector));
 
-        _applyRules(cssRules.join('\n'), 'titlebar-style');
-    }
+    _applyRules(cssRules.join('\n'), 'titlebar-style');
+  }
 
-    static get win(): Theme {
-        return ((collector: CssStyle) => {
-            collector.addRule(`
+  static get win(): Theme {
+    return (collector: CssStyle) => {
+      collector.addRule(`
             .titlebar .window-controls-container .window-icon-bg {
                 display: inline-block;
                 -webkit-app-region: no-drag;
@@ -440,12 +439,12 @@ export class Themebar extends ThemingRegistry {
                 background-color: rgba(0, 0, 0, .1);
             }
         `);
-        });
-    }
+    };
+  }
 
-    static get mac(): Theme {
-        return ((collector: CssStyle) => {
-            collector.addRule(`
+  static get mac(): Theme {
+    return (collector: CssStyle) => {
+      collector.addRule(`
             .titlebar .window-controls-container .window-icon-bg {
                 display: inline-block;
                 -webkit-app-region: no-drag;
@@ -522,29 +521,28 @@ export class Themebar extends ThemingRegistry {
                 mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19,13H5V11H19V13Z' fill='%23000'/%3E%3C/svg%3E") no-repeat 50% 50%;
             }
         `);
-        });
-    }
-
+    };
+  }
 }
 
 export interface CssStyle {
-    addRule(rule: string): void;
+  addRule(rule: string): void;
 }
 
 export interface Theme {
-    (collector: CssStyle): void;
+  (collector: CssStyle): void;
 }
 
 function _applyRules(styleSheetContent: string, rulesClassName: string) {
-    let themeStyles = document.head.getElementsByClassName(rulesClassName);
+  let themeStyles = document.head.getElementsByClassName(rulesClassName);
 
-    if (themeStyles.length === 0) {
-        let styleElement = document.createElement('style');
-        styleElement.type = 'text/css';
-        styleElement.className = rulesClassName;
-        styleElement.innerHTML = styleSheetContent;
-        document.head.appendChild(styleElement);
-    } else {
-        (<HTMLStyleElement>themeStyles[0]).innerHTML = styleSheetContent;
-    }
+  if (themeStyles.length === 0) {
+    let styleElement = document.createElement('style');
+    styleElement.type = 'text/css';
+    styleElement.className = rulesClassName;
+    styleElement.innerHTML = styleSheetContent;
+    document.head.appendChild(styleElement);
+  } else {
+    (<HTMLStyleElement>themeStyles[0]).innerHTML = styleSheetContent;
+  }
 }
