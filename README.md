@@ -5,6 +5,7 @@ This project is a typescript library for electron that allows you to configure a
 ### Fork
 
 1. Fix dispose.
+2. Fix deprecation warnings regarding `isMinimizable`, `isMaximizable` and `isClosable`.
 
 ### **It is a library for electron, it cannot be used on a basic website.**
 
